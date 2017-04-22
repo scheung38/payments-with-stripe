@@ -7,6 +7,18 @@
 
         <title>Laravel</title>
 
+
+
+        <script type="text/javascript">
+            
+            var Laracasts = {
+
+                csrfToken: "{{ csrf_token() }}",
+                stripeToken: "{{ config('services.stripe.key') }}"
+            };
+
+        </script>
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
@@ -66,87 +78,15 @@
     </head>
     
     <body>
+
+    <div id="app">
        
-       <!-- <h1>Buy My Item</h1> -->
+       <checkout-form></checkout-form>
+    
+    </div>
+    
+        <script src="https://checkout.stripe.com/checkout.js"></script>
 
-      <form id="checkout-form" action="/purchases" method="POST">
-
-        {{ csrf_field() }}
-
-        <input type="hidden" name="stripeToken" id="stripeToken">
-
-        <input type="hidden" name="stripeEmail" id="stripeEmail">
-        
-        <button type="submit">Buy My Book</button>
-
-          <!-- <script
-
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-
-            data-key="{{ config('services.stripe.key') }} "
-            
-            data-amount="2500"
-            
-            data-name="Dellvo"
-            
-            data-description="This'll give you everything you need."
-            
-            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-            
-            data-locale="auto"
-
-            data-zip-code="true">
-          
-          </script> -->
-        
-        </form>  
- 
-<script src="https://checkout.stripe.com/checkout.js"></script>
-
-<script>
-
-    let stripe = StripeCheckout.configure({
-
-        key: "{{ config('services.stripe.key') }}",
-        
-        image: "https://stripe.com/img/documentation/checkout/marketplace.png",
-        
-        locale: "auto",
-
-        token: function (token) {
-            document.querySelector('#stripeEmail').value = token.email;
-            
-            document.querySelector('#stripeToken').value = token.id;
-
-            document.querySelector('#checkout-form').submit();   
-        }
-    });
-
-
-    document.querySelector('button').addEventListener('click', function(e) {
- 
-        stripe.open({
-
-            name: 'My Book',
-
-            description: 'Some details about the book.',
-
-            zipCode: true,
-
-            amount: 99
-
-        });
-
-        e.preventDefault();
-
-    });
-
-   
-
-
-</script>
-
-
-
+        <script src="/js/app.js"></script>
     </body>
 </html>
